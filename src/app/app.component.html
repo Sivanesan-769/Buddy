@@ -35,6 +35,23 @@
           </div>
         </div>
       </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Dictionary </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div style="display: flex; flex-direction: column;">
+          <mat-form-field>
+            <mat-label>Enter Word</mat-label>
+            <input matInput type="text" [(ngModel)]="text" />
+          </mat-form-field>
+          <button mat-button (click)="getMeaning()">Submit</button>
+          <div style="margin: 10px;">
+            <p>{{numberInWords}}</p>
+          </div>
+        </div>
+      </mat-expansion-panel>
     </mat-accordion>
 
   </div>

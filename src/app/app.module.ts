@@ -13,6 +13,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { NumberToWordsService } from './services/number-to-words.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { OxfordDictionaryService } from './services/oxford-dictionary.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { NumberToWordsService } from './services/number-to-words.service';
   ],
   providers: [
     provideAnimationsAsync(),
-    NumberToWordsService
+    NumberToWordsService,
+    OxfordDictionaryService,
+    provideHttpClient(withInterceptorsFromDi())
   ],
   bootstrap: [AppComponent]
 })
