@@ -2,6 +2,7 @@ import { Component, inject, viewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { NumberToWordsService } from './services/number-to-words.service';
 import { OxfordDictionaryService } from './services/oxford-dictionary.service';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,8 @@ import { OxfordDictionaryService } from './services/oxford-dictionary.service';
 export class AppComponent {
   title = 'buddy';
 
-  whatsappNum!: number;
-  amount!: number;
+  whatsappNum!: any;
+  amount!: any;
   numberInWords: string = '';
   text: string = '';
   accordion = viewChild.required(MatAccordion);
@@ -38,5 +39,12 @@ export class AppComponent {
         console.error('Error:', error);
       }
     );
+  }
+
+  onPanelClosed() {
+    this.amount = null;
+    this.whatsappNum = null;
+    this.meaning = [];
+    this.text = '';
   }
 }

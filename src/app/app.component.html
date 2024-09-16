@@ -6,7 +6,7 @@
         <button mat-button (click)="accordion().closeAll()">Collapse All</button>
       </div> -->
       <mat-accordion class="example-headers-align" multi>
-        <mat-expansion-panel>
+        <mat-expansion-panel (closed)="onPanelClosed()">
           <mat-expansion-panel-header>
             <mat-panel-title> Whatsapp </mat-panel-title>
           </mat-expansion-panel-header>
@@ -20,7 +20,7 @@
           </div>
 
         </mat-expansion-panel>
-        <mat-expansion-panel>
+        <mat-expansion-panel (closed)="onPanelClosed()">
           <mat-expansion-panel-header>
             <mat-panel-title> Amount Descript </mat-panel-title>
           </mat-expansion-panel-header>
@@ -37,7 +37,7 @@
           </div>
         </mat-expansion-panel>
 
-        <mat-expansion-panel>
+        <mat-expansion-panel (closed)="onPanelClosed()">
           <mat-expansion-panel-header>
             <mat-panel-title> Dictionary </mat-panel-title>
           </mat-expansion-panel-header>
