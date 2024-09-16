@@ -1,0 +1,72 @@
+<div class="container" [ngStyle]="getDynamicStyles()">
+  <div class="grid-container">
+    <div class="grid-item">
+      <!-- <div class="example-action-buttons">
+        <button mat-button (click)="accordion().openAll()">Expand All</button>
+        <button mat-button (click)="accordion().closeAll()">Collapse All</button>
+      </div> -->
+      <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel (closed)="onPanelClosed()">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Whatsapp </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div style="display: flex; flex-direction: column;">
+            <mat-form-field>
+              <mat-label>Whatsapp Number</mat-label>
+              <input matInput type="number" maxlength="10" [(ngModel)]="whatsappNum" />
+            </mat-form-field>
+            <button mat-button (click)="navToWhatsapp()">Submit</button>
+          </div>
+
+        </mat-expansion-panel>
+        <mat-expansion-panel (closed)="onPanelClosed()">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Amount Descript </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div style="display: flex; flex-direction: column;">
+            <mat-form-field>
+              <mat-label>Enter Amount</mat-label>
+              <input matInput type="number" maxlength="10" [(ngModel)]="amount" />
+            </mat-form-field>
+            <button mat-button (click)="amountChange()">Submit</button>
+            <div style="margin: 10px;">
+              <p>{{numberInWords}}</p>
+            </div>
+          </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel (closed)="onPanelClosed()">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Dictionary </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div style="display: flex; flex-direction: column;">
+            <mat-form-field>
+              <mat-label>Enter Word</mat-label>
+              <input matInput type="text" [(ngModel)]="text" />
+            </mat-form-field>
+            <button mat-button (click)="getMeaning()">Submit</button>
+            <div style="margin: 10px;">
+              <div *ngFor="let i of meaning">
+                <div *ngFor="let j of i.synonyms">
+                  <ul>
+                    <li>Meaning: {{j}}</li>
+                  </ul>
+                </div>
+                <div *ngFor="let k of i.definitions">
+                  <ul>
+                    <li>{{ k.definition }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: url("./../../../assets/main-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: 100%;
+  padding: 10px;
+  border-radius: 10px;
+}
+.grid-item {
+  /* From https://css.glass */
+  background: rgba(167, 158, 158, 0.41);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.4px);
+  -webkit-backdrop-filter: blur(6.4px);
+  border: 1px solid rgba(167, 158, 158, 1);
+  padding: 20px;
+  font-size: 30px;
+  /* text-align: center; */
+}
+
+.example-action-buttons {
+  padding-bottom: 20px;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-mdc-form-field + .mat-mdc-form-field {
+  margin-left: 8px;
+}
+
+.mat-expansion-panel {
+  margin-bottom: 10px;
+}

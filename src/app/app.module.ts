@@ -15,10 +15,14 @@ import { FormsModule } from '@angular/forms';
 import { NumberToWordsService } from './services/number-to-words.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { OxfordDictionaryService } from './services/oxford-dictionary.service';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
