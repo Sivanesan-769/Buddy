@@ -19,6 +19,8 @@ export class AppComponent {
   numService = inject(NumberToWordsService);
   oxfordService = inject(OxfordDictionaryService);
 
+  meaning: any[] = [];
+
   navToWhatsapp() {
     window.location.href = `https://wa.me/+91${this.whatsappNum}`;
   }
@@ -30,8 +32,7 @@ export class AppComponent {
   getMeaning() {
     this.oxfordService.getWordDefinition(this.text).subscribe(
       (response) => {
-        console.log('Status Code:', response.statusCode);
-        console.log('Response:', response);
+        this.meaning = response[0].meanings;
       },
       (error) => {
         console.error('Error:', error);
