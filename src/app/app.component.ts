@@ -19,8 +19,8 @@ export class AppComponent {
   accordion = viewChild.required(MatAccordion);
   numService = inject(NumberToWordsService);
   oxfordService = inject(OxfordDictionaryService);
-
   meaning: any[] = [];
+  height: any = {'height': `${window.innerHeight}px`};
 
   navToWhatsapp() {
     window.location.href = `https://wa.me/+91${this.whatsappNum}`;
@@ -31,6 +31,7 @@ export class AppComponent {
   }
 
   getMeaning() {
+    this.height = {'height': 'auto'};
     this.oxfordService.getWordDefinition(this.text).subscribe(
       (response) => {
         this.meaning = response[0].meanings;
@@ -41,10 +42,15 @@ export class AppComponent {
     );
   }
 
+  getDynamicStyles() {
+    return this.height;
+  }
+
   onPanelClosed() {
     this.amount = null;
     this.whatsappNum = null;
     this.meaning = [];
     this.text = '';
+    this.height = {'height': `${window.innerHeight}px`};
   }
 }
