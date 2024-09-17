@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "server": "node backend/server.js",
+    "server": "node src/backend/server.js",
     "client": "ng serve"
   },
   "private": true,
