@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class EncryptionService {
-  secretKey = environment.Data_Secret_Key;
+  private readonly secretKey = environment.Data_Secret_Key;
 
   encryptIP(data: string): string {
     return CryptoJS.AES.encrypt(data, this.secretKey).toString();
