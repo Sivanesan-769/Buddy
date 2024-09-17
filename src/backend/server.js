@@ -8,10 +8,15 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // MongoDB connection string
-const mongoUri = process.env.MONGODB_URI;
+const mongoUri = 'mongodb+srv://sivanesandh:HsncXijCJsAE2tD2@buddy-cluster.5dpdf.mongodb.net/?retryWrites=true&w=majority&appName=Buddy-Cluster';
 
-// Connect to MongoDB
-mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+if (!mongoUri) {
+  console.error('Error: MongoDB connection string is undefined. Please check the .env file.');
+  process.exit(1); // Exit the process if the connection string is missing
+}
+
+// Connect to MongoDB without deprecated options
+mongoose.connect(mongoUri)
   .then(() => console.log('MongoDB connected successfully'))
   .catch(err => console.error('MongoDB connection error:', err));
 
