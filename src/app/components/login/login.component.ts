@@ -17,6 +17,9 @@ export interface ILogin {
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+
+  height: number = window.innerHeight;
+
   constructor(
     private authService: SocialAuthService,
     private secretVault: EncryptionService,

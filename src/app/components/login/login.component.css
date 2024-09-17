@@ -1,0 +1,9 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: url("./../../../assets/main-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
+}
