@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { NumberToWordsService } from './services/number-to-words.service';
 import {
+  HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
@@ -26,6 +27,7 @@ import {
   SocialAuthServiceConfig,
 } from '@abacritt/angularx-social-login';
 import { environment } from '../environments/environment';
+import { HttpInterceptorService } from './http-interceptor/http.interceptor';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent],
@@ -54,13 +56,18 @@ import { environment } from '../environments/environment';
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(environment.Google_Client_Id),
-          },
+          }
         ],
         onError: (error) => {
           console.error(error);
         },
       } as SocialAuthServiceConfig,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent],
 })

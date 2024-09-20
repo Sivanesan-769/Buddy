@@ -5,21 +5,32 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt'); // If using password hashing
 const jwt = require('jsonwebtoken'); // If using JWT for tokens
 const validateToken = require('../middleware/auth-middleware');
+const CryptoJS = require("crypto-js");
+require('dotenv').config();
 
+const SECRET_KEY = 'Sivanesan_3843_1997_695313909590_3120160000506_GUOPS1632G';
 
 // Login route
 router.post('/login', validateToken, async (req, res) => {
-  const { id, token } = req.body;
+  console.log('req.body :', req.body);
+  const { _data } = req.body;
+  const decryptData = decrypt(_data);
+  const decryptedObj = JSON.parse(decryptData);
+  const { token } = decryptedObj;
 
   try {
-    const user = await User.findOne({ id, token });
+    const user = await User.findOne({ token });
 
     if (user) {
       // Successfully authenticated
-      res.json({ success: true, message: 'Login successful', user });
+      const req = encrypt(JSON.stringify(user));
+      const reqData = {
+        _data: req
+      }
+      res.json({ success: true, message: 'Login successful', reqData });
     } else {
       // Authentication failed
-      res.status(401).json({ success: false, message: 'Invalid ID or token' });
+      res.status(401).json({ success: false, message: 'Invalid token' });
     }
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error', error: err });
@@ -28,21 +39,41 @@ router.post('/login', validateToken, async (req, res) => {
 
 // Register route (for initial login)
 router.post('/register', async (req, res) => {
-  const { id, name, email, ip, token } = req.body;
-
+  const { _data } = req.body;
+  const decryptData = decrypt(_data);
+  const decryptedObj = JSON.parse(decryptData);
+  const { id, name, email, ip, token } = decryptedObj;
   try {
     const existingUser = await User.findOne({ id });
 
     if (existingUser) {
-      return res.status(400).json({ success: false, message: 'User already exists' });
+      const req = encrypt(JSON.stringify(existingUser));
+      const user = {
+        _data: req
+      }
+      return res.status(400).json({ success: false, message: 'User already exists', user});
     }
-
+    token = encrypt(id);
     const newUser = new User({ id, name, email, ip, token });
     await newUser.save();
-    res.json({ success: true, message: 'User registered successfully', user: newUser });
+    const req = encrypt(JSON.stringify(newUser));
+      const user = {
+        _data: req
+      }
+    res.json({ success: true, message: 'User registered successfully', user });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Server error', error: err });
   }
 });
 
+function encrypt(data) {
+  return CryptoJS.AES.encrypt(data, SECRET_KEY).toString();
+}
+
+function decrypt(data) {
+  const bytes = CryptoJS.AES.decrypt(data, SECRET_KEY);
+  return bytes.toString(CryptoJS.enc.Utf8);
+}
+
 module.exports = router;
+

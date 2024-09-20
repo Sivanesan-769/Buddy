@@ -2,14 +2,11 @@ import { GoogleLoginProvider, SocialAuthService } from '@abacritt/angularx-socia
 import { Component } from '@angular/core';
 import { EncryptionService } from '../../services/register-ip/data-encrypt.service';
 import { IpService } from '../../services/register-ip/ip.service';
-
-export interface ILogin {
-  id: string;
-  name: string;
-  email: string;
-  ip: string;
-  token: string;
-}
+import { ILogin } from '../../models/Ilogin';
+import { ApiService } from '../../services/api/api.service';
+import { StatusMessage } from '../../enum/response-message';
+import { response } from 'express';
+import { SharedService } from '../../services/shared/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -23,20 +20,29 @@ export class LoginComponent {
   constructor(
     private authService: SocialAuthService,
     private secretVault: EncryptionService,
-    private ip: IpService
+    private ip: IpService,
+    private api: ApiService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
     this.authService.authState.subscribe((user) => {
-      this.ip.getIp().subscribe((data) => {
         let result: ILogin = <ILogin>{};
         result.id = user.id;
         result.name = user.name;
         result.email = user.email;
-        result.ip = this.secretVault.encryptIP(data.ip);
-        result.token = user.idToken;
-        console.log('result :', result);
-      });
+        result.token = this.secretVault.encrypt(`${user.id+user.name+user.email}`);
+        this.api.registerUser(result).subscribe((response) => {
+          console.log(this.secretVault.decrypt(response));
+        },(err) => {
+          if(err.error.message == StatusMessage.USER_EXIST) {
+            const data = this.secretVault.decrypt(err.error.user._data);
+            this.sharedService.authToken = JSON.parse(data).token;
+            this.api.loginUser(result).subscribe((response) => {
+              console.log(response);
+            });
+          }
+        });
     });
   }
 
