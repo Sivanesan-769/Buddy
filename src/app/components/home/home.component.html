@@ -64,6 +64,20 @@
             </div>
           </div>
         </mat-expansion-panel>
+
+        <mat-expansion-panel (closed)="onPanelClosed()">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Password Manager </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div style="display: flex; flex-direction: column;">
+            <!-- <mat-form-field>
+              <mat-label>Enter Word</mat-label>
+              <input matInput type="text" [(ngModel)]="text" />
+            </mat-form-field> -->
+            <app-login></app-login>
+          </div>
+        </mat-expansion-panel>
       </mat-accordion>
 
     </div>
