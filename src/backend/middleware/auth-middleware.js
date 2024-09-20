@@ -11,7 +11,7 @@ async function validateToken(req, res, next) {
 
   try {
     // Find user with the provided token
-    const user = await User.findOne({ token });
+    const user = await User.findOne({ id });
 
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid token' });

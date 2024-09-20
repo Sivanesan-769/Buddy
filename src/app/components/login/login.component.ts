@@ -33,13 +33,13 @@ export class LoginComponent {
         result.email = user.email;
         result.token = this.secretVault.encrypt(`${user.id+user.name+user.email}`);
         this.api.registerUser(result).subscribe((response) => {
-          console.log(this.secretVault.decrypt(response));
+          // console.log(this.secretVault.decrypt(response));
         },(err) => {
           if(err.error.message == StatusMessage.USER_EXIST) {
             const data = this.secretVault.decrypt(err.error.user._data);
-            this.sharedService.authToken = JSON.parse(data).token;
+            this.sharedService.authToken = this.secretVault.encrypt(JSON.parse(data).id);
             this.api.loginUser(result).subscribe((response) => {
-              console.log(response);
+              // console.log(JSON.parse(this.secretVault.decrypt(response.reqData._data)));
             });
           }
         });

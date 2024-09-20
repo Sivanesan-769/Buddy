@@ -6,20 +6,17 @@ const bcrypt = require('bcrypt'); // If using password hashing
 const jwt = require('jsonwebtoken'); // If using JWT for tokens
 const validateToken = require('../middleware/auth-middleware');
 const CryptoJS = require("crypto-js");
-require('dotenv').config();
-
-const SECRET_KEY = 'Sivanesan_3843_1997_695313909590_3120160000506_GUOPS1632G';
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
 
 // Login route
-router.post('/login', validateToken, async (req, res) => {
-  console.log('req.body :', req.body);
+router.post('/login', async (req, res) => {
   const { _data } = req.body;
   const decryptData = decrypt(_data);
   const decryptedObj = JSON.parse(decryptData);
-  const { token } = decryptedObj;
+  const { id, token } = decryptedObj;
 
   try {
-    const user = await User.findOne({ token });
+    const user = await User.findOne({ id });
 
     if (user) {
       // Successfully authenticated
@@ -42,7 +39,7 @@ router.post('/register', async (req, res) => {
   const { _data } = req.body;
   const decryptData = decrypt(_data);
   const decryptedObj = JSON.parse(decryptData);
-  const { id, name, email, ip, token } = decryptedObj;
+  var { id, name, email, ip, token } = decryptedObj;
   try {
     const existingUser = await User.findOne({ id });
 
@@ -67,11 +64,11 @@ router.post('/register', async (req, res) => {
 });
 
 function encrypt(data) {
-  return CryptoJS.AES.encrypt(data, SECRET_KEY).toString();
+  return CryptoJS.AES.encrypt(data, process.env.SECRET_KEY).toString();
 }
 
 function decrypt(data) {
-  const bytes = CryptoJS.AES.decrypt(data, SECRET_KEY);
+  const bytes = CryptoJS.AES.decrypt(data, process.env.SECRET_KEY);
   return bytes.toString(CryptoJS.enc.Utf8);
 }
 

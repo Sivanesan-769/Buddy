@@ -2,13 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('dotenv').config();
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // MongoDB connection string
-const mongoUri = 'mongodb+srv://sivanesandh:HsncXijCJsAE2tD2@buddy-cluster.5dpdf.mongodb.net/?retryWrites=true&w=majority&appName=Buddy-Cluster';
+const mongoUri = process.env.MONGODB_URI;
 
 if (!mongoUri) {
   console.error('Error: MongoDB connection string is undefined. Please check the .env file.');
